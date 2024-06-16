@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public abstract class Tower : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public abstract class Tower : MonoBehaviour
     [SerializeField] protected List<EnemyComponent> m_targets = new List<EnemyComponent>();
     [SerializeField] protected DynamicPool.DynamicPool m_pool;
     
+    protected EnemyComponent m_curTarget;
     protected float m_curCooldown;
     private SphereCollider m_rangeCollider;
     private List<EnemyComponent> m_subscriptions = new List<EnemyComponent>();
@@ -22,6 +24,42 @@ public abstract class Tower : MonoBehaviour
     {
         m_rangeCollider = GetComponent<SphereCollider>();
         m_rangeCollider.radius = m_range;
+    }
+    
+    public virtual bool CanShoot()
+    {
+        if (!m_projectilePrefab || !m_spawnProjectilePoint)
+        {
+            Debug.LogError("The projectilePrefab, spawnProjectilePoint link is not installed or m_curTarget link is not");
+            return false;
+        }
+
+        if (!m_curTarget)
+        {
+            return false;
+        }
+       
+        if (!m_curTarget || m_curCooldown > 0)
+        {
+            return false;
+        }
+       
+        return true;
+    }
+
+    public virtual void CatchTarget()
+    {
+        if (m_targets.Count <= 0 )
+        {
+            return;
+        }
+       
+        if (!m_curTarget && m_targets.Count > 0 || 
+            m_curTarget && Vector3.Distance(transform.position, m_curTarget.transform.position) > m_range ||
+            !m_curTarget.gameObject.activeSelf)
+        {
+            m_curTarget = m_targets.First();
+        } 
     }
     private void OnTriggerEnter(Collider other)
     {

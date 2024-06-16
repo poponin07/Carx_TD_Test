@@ -1,22 +1,20 @@
 ﻿using UnityEngine;
-using System.Linq;
 
 
 public class ConnonTowerComponent : Tower, IShoot, ICannonAiming
 {
     [SerializeField] private float trackingSpeed;
     private Vector3 targetPoint;
-    private float projectileSpeed;
-    private EnemyComponent m_curTarget;
-    private float errorRateAimAngle;
+    private float m_projectileSpeed;
+    private float m_errorRateAimAngle;
 
     private void Start()
     {
         base.Start();
-        projectileSpeed = m_projectilePrefab.GetComponent<CannonProjectileComponent>().GetSpeed();
+        m_projectileSpeed = m_projectilePrefab.GetComponent<CannonProjectileComponent>().GetSpeed();
         m_curCooldown = m_cooldownSoot;
         m_pool.CreatePool(m_projectilePrefab, 2, m_projectileParent);
-        errorRateAimAngle = 7;
+        m_errorRateAimAngle = 7;
     }
     private void Update()
     {
@@ -36,43 +34,7 @@ public class ConnonTowerComponent : Tower, IShoot, ICannonAiming
         }
     }
     
-    public bool CanShoot()
-        {
-            if (!m_projectilePrefab || !m_spawnProjectilePoint)
-            {
-                Debug.LogError(
-                    "The projectilePrefab, spawnProjectilePoint link is not installed or m_curTarget link is not");
-                return false;
-            }
-
-            if (!m_curTarget)
-            {
-                return false;
-            }
-
-            if (!m_curTarget || m_curCooldown > 0)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-    public void CatchTarget()
-        {
-            if (m_targets.Count <= 0)
-            {
-                return;
-            }
-
-            if (!m_curTarget && m_targets.Count > 0 ||
-                m_curTarget && Vector3.Distance(transform.position, m_curTarget.transform.position) > m_range ||
-                !m_curTarget.gameObject.activeSelf)
-            {
-                m_curTarget = m_targets.First();
-            }
-        }
-
+    
     public void Shoot()
         {
             var projectile = m_pool.GetFromPool(m_projectilePrefab, m_projectileParent);
@@ -105,7 +67,7 @@ public class ConnonTowerComponent : Tower, IShoot, ICannonAiming
             float shooterTargetDist = displacement.magnitude;
             float targetVelocityMagnitude = targetVelocity.magnitude;
 
-            float a = projectileSpeed * projectileSpeed - targetVelocityMagnitude * targetVelocityMagnitude;
+            float a = m_projectileSpeed * m_projectileSpeed - targetVelocityMagnitude * targetVelocityMagnitude;
             float b = 2 * shooterTargetDist * targetVelocityMagnitude * Mathf.Cos(targetMoveAngle);
             float c = -shooterTargetDist * shooterTargetDist;
 
@@ -137,7 +99,7 @@ public class ConnonTowerComponent : Tower, IShoot, ICannonAiming
             float g = Physics.gravity.magnitude;
             float offsetY = targetPosition.y;
             float distanceX = targetPosition.magnitude;
-            float speedSquared = projectileSpeed * projectileSpeed;
+            float speedSquared = m_projectileSpeed * m_projectileSpeed;
 
             float underSqrt = (speedSquared * speedSquared) -
                               g * (g * distanceX * distanceX + 2 * offsetY * speedSquared);
@@ -175,7 +137,7 @@ public class ConnonTowerComponent : Tower, IShoot, ICannonAiming
         targetPosition = new Vector3(targetPosition.x, 0, targetPosition.z);
         Vector3 directionToTarget = (targetPosition - transform.position).normalized;
         float angleToTarget = Vector3.Angle(m_spawnProjectilePoint.forward, directionToTarget);
-        if (angleToTarget <= errorRateAimAngle)
+        if (angleToTarget <= m_errorRateAimAngle)
         {
             return true;
         }

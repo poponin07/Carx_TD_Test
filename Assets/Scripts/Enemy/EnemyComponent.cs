@@ -11,10 +11,10 @@ public class EnemyComponent : MonoBehaviour, ITakeDamage, IMove
     [SerializeField] private GameObject m_enemyPrefab;
     [SerializeField] public List<Transform> moveTargets;
     [SerializeField] public float turnSpeed;
+    [SerializeField] private float m_speed;
     
     private int m_currentHP;
     private Transform curTarget;
-    private float m_speed;
     protected int pointIndex;
     private DynamicPool.DynamicPool m_pool;
     

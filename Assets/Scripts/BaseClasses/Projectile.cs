@@ -10,6 +10,7 @@ public class Projectile : MonoBehaviour
     protected DynamicPool.DynamicPool m_pool;
     protected Transform m_target;
     
+
     public void Initialization(GameObject prefab, Transform spawnPoint, Transform target, DynamicPool.DynamicPool pool)
     {
         m_projectilePrefab = prefab;
