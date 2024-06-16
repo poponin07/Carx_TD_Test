@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public abstract class Tower : MonoBehaviour
@@ -15,7 +14,6 @@ public abstract class Tower : MonoBehaviour
     [SerializeField] protected List<EnemyComponent> m_targets = new List<EnemyComponent>();
     [SerializeField] protected DynamicPool.DynamicPool m_pool;
     
-    //protected EnemyComponent m_curTarget;
     protected float m_curCooldown;
     private SphereCollider m_rangeCollider;
     private List<EnemyComponent> m_subscriptions = new List<EnemyComponent>();

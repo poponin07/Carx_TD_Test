@@ -10,8 +10,6 @@ public class Projectile : MonoBehaviour
     protected DynamicPool.DynamicPool m_pool;
     protected Transform m_target;
     
-
-
     public void Initialization(GameObject prefab, Transform spawnPoint, Transform target, DynamicPool.DynamicPool pool)
     {
         m_projectilePrefab = prefab;
@@ -20,11 +18,7 @@ public class Projectile : MonoBehaviour
         m_target = target;
         m_pool = pool;
     }
-    
-    public float GetSpeed()
-    {
-        return m_speed;
-    }
+  
     void OnTriggerEnter(Collider other)
     {
         var enemy = other.gameObject.GetComponent<EnemyComponent>();

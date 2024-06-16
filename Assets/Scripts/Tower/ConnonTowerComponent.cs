@@ -175,7 +175,6 @@ public class ConnonTowerComponent : Tower, IShoot, ICannonAiming
         targetPosition = new Vector3(targetPosition.x, 0, targetPosition.z);
         Vector3 directionToTarget = (targetPosition - transform.position).normalized;
         float angleToTarget = Vector3.Angle(m_spawnProjectilePoint.forward, directionToTarget);
-        Debug.Log(angleToTarget);
         if (angleToTarget <= errorRateAimAngle)
         {
             return true;
