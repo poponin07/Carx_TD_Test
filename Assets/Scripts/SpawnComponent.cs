@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Enemy;
 
 public class SpawnComponent : MonoBehaviour
 {
@@ -26,8 +27,9 @@ public class SpawnComponent : MonoBehaviour
 		if (m_curCooldown <= 0) 
 		{
 			var enemy = m_pool.GetFromPool(m_enemyPrefab, m_enemyParent);
-			enemy.transform.position = m_spawnPoint.position;
-			enemy.GetComponent<EnemyComponent>().Initialization(m_targetsToMove, m_pool, m_enemyPrefab);
+			var spawnTransform = m_spawnPoint.position;
+			enemy.transform.position = spawnTransform;
+			enemy.GetComponent<EnemyComponent>().Initialization(m_targetsToMove, m_pool, m_enemyPrefab, spawnTransform);
 			enemy.SetActive(true);
 			m_curCooldown = m_spawnInterval;
 		}

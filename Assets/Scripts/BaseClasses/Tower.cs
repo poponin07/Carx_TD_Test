@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Enemy;
 
 public abstract class Tower : MonoBehaviour, IShoot
 {
@@ -24,6 +25,7 @@ public abstract class Tower : MonoBehaviour, IShoot
     {
         m_rangeCollider = GetComponent<SphereCollider>();
         m_rangeCollider.radius = m_range;
+        m_pool.CreatePool(m_projectilePrefab, 2, m_projectileParent);
     }
     
     public virtual bool CanShoot()

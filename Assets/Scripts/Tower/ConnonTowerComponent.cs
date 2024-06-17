@@ -1,20 +1,17 @@
 ﻿using UnityEngine;
 
 
-public class ConnonTowerComponent : Tower, IShoot, ICannonAiming
+public class ConnonTowerComponent : Tower, ICannonAiming
 {
     [SerializeField] private float trackingSpeed;
     private Vector3 targetPoint;
     private float m_projectileSpeed;
-    private float m_errorRateAimAngle;
 
     private void Start()
     {
         base.Start();
         m_projectileSpeed = m_projectilePrefab.GetComponent<CannonProjectileComponent>().GetSpeed();
         m_curCooldown = m_cooldownSoot;
-        m_pool.CreatePool(m_projectilePrefab, 2, m_projectileParent);
-        m_errorRateAimAngle = 7;
     }
     private void Update()
     {
@@ -144,6 +141,7 @@ public class ConnonTowerComponent : Tower, IShoot, ICannonAiming
 
         return false;
     }
+    
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

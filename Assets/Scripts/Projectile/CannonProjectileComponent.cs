@@ -3,14 +3,6 @@
 public class CannonProjectileComponent : Projectile, IMove
 {
 
-    public void Initialization(GameObject prefab, Transform spawnPoint, Transform target, DynamicPool.DynamicPool pool)
-    {
-        m_projectilePrefab = prefab;
-        m_shootPoint = spawnPoint;
-        transform.position = spawnPoint.position;
-        m_target = target;
-        m_pool = pool;
-    }
     public void LaunchingProjectile()
     {
         Rotation();

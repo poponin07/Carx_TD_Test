@@ -1,16 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class GuidedProjectileComponent : Projectile, IMove
 {
-    
-    public void Initialization(GameObject prefab, Transform spawnPoint, Transform target, DynamicPool.DynamicPool pool)
-    {
-        m_projectilePrefab = prefab;
-        m_shootPoint = spawnPoint;
-        transform.position = spawnPoint.position;
-        m_target = target;
-        m_pool = pool;
-    }
     private void FixedUpdate()
     {
         Move();
@@ -31,8 +23,4 @@ public class GuidedProjectileComponent : Projectile, IMove
     {
         transform.LookAt(m_target);
     }
-    
-    
-    
-    
 }

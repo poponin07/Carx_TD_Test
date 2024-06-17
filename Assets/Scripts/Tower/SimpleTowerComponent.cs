@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 
-public class SimpleTowerComponent : Tower, IShoot
+public class SimpleTowerComponent : Tower
 {
+    
+    
     void Update()
     {
         m_curCooldown -= Time.deltaTime;
