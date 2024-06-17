@@ -13,7 +13,7 @@ public class SimpleTowerComponent : Tower, IShoot
         }
     }
     
-    public void Shoot()
+    public override void Shoot()
     {
         var projectile = m_pool.GetFromPool(m_projectilePrefab, m_projectileParent);
         projectile.GetComponent<GuidedProjectileComponent>().Initialization(m_projectilePrefab, m_spawnProjectilePoint, m_curTarget.gameObject.transform, m_pool);

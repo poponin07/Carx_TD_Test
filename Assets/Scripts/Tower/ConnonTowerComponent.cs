@@ -21,7 +21,7 @@ public class ConnonTowerComponent : Tower, IShoot, ICannonAiming
         m_curCooldown -= Time.deltaTime;
         CatchTarget();
         
-        if (CanShoot() )//&& IsTowerAimedAtTarget(targetPoint))
+        if (CanShoot() && IsTowerAimedAtTarget(targetPoint))
         {
             Shoot();
         }
@@ -35,7 +35,7 @@ public class ConnonTowerComponent : Tower, IShoot, ICannonAiming
     }
     
     
-    public void Shoot()
+    public override void Shoot()
         {
             var projectile = m_pool.GetFromPool(m_projectilePrefab, m_projectileParent);
             CannonProjectileComponent projComp = projectile.GetComponent<CannonProjectileComponent>();
@@ -128,7 +128,7 @@ public class ConnonTowerComponent : Tower, IShoot, ICannonAiming
         transform.localRotation =
             Quaternion.RotateTowards(transform.localRotation, rotationY, trackingSpeed * Time.deltaTime);
         
-        gameObject.transform.rotation = Quaternion.RotateTowards(gameObject.transform.rotation, targetRotation,
+        transform.rotation = Quaternion.RotateTowards(gameObject.transform.rotation, targetRotation,
             trackingSpeed * Time.deltaTime);
     }
     
@@ -136,8 +136,8 @@ public class ConnonTowerComponent : Tower, IShoot, ICannonAiming
     {
         targetPosition = new Vector3(targetPosition.x, 0, targetPosition.z);
         Vector3 directionToTarget = (targetPosition - transform.position).normalized;
-        float angleToTarget = Vector3.Angle(m_spawnProjectilePoint.forward, directionToTarget);
-        if (angleToTarget <= m_errorRateAimAngle)
+
+        if (Vector3.Dot(transform.forward, directionToTarget) > .99)
         {
             return true;
         }

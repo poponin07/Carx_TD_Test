@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Linq;
 
-public abstract class Tower : MonoBehaviour
+public abstract class Tower : MonoBehaviour, IShoot
 {
     [Header("Tower Settings")]
     [SerializeField] protected float m_cooldownSoot;
@@ -61,6 +61,11 @@ public abstract class Tower : MonoBehaviour
             m_curTarget = m_targets.First();
         } 
     }
+
+    public virtual void Shoot()
+    {
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         var enemy = other.GetComponent<EnemyComponent>();
